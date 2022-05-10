@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如 namespace="com.geekq.uMybatis.mapping.UserMapper"就是 com.geekq.uMybatis.mapping.UserMapper(包名)+
+userMapper(userMapper.xml文件去除后缀)保证唯一性
+ -->
+<mapper namespace="com.example.faqan.mapper.GoodsMapper">
+    <resultMap type="com.example.faqan.vo.Goods" id="GoodsMap">
+        <id column="id" property="id"/>
+        <result column="good_name" property="goodsName"/>
+        <result column="qty" property="qty"/>
+    </resultMap>
+
+
+
+    <sql id="goods_col">
+        id,goods_name,qty
+    </sql>
+
+
+<!--    查所有秒杀商品-->
+    <select id="getAllGoods" resultMap="GoodsMap">
+        select <include refid="goods_col" />
+        from goods
+    </select>
+
+
+
+
+<!--    &lt;!&ndash; update&ndash;&gt;-->
+    <update id="derQty" parameterType="int"
+            keyProperty="id">
+        update goods  set qty=qty-1 where id=#{goodsId} and qty > 0
+    </update>
+
+
+
+</mapper>

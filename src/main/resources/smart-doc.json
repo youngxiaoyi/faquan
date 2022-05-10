@@ -1,0 +1,8 @@
+{
+  "serverUrl": "http://127.0.0.1",
+  "allInOne": true,
+  "isStrict": false,
+  "outPath": "src/main/resources/static/torna",
+  "projectName": "springboot-demo",
+  "language":"CHINESE"
+}

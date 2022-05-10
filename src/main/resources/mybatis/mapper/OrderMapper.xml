@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如 namespace="com.geekq.uMybatis.mapping.UserMapper"就是 com.geekq.uMybatis.mapping.UserMapper(包名)+
+userMapper(userMapper.xml文件去除后缀)保证唯一性
+ -->
+<mapper namespace="com.example.faqan.mapper.OrderMapper">
+    <resultMap type="com.example.faqan.vo.Order" id="orderMap">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+
+    <sql id="goods_col">
+        count(id)
+    </sql>
+
+<!--    查看用户秒杀订单-->
+    <select id="getUserGoods" resultType="int">
+        select <include refid="goods_col" />
+        from orders where user_id = #{order.userId} and goods_id = #{order.goodsId}
+    </select>
+<!--    创建订单-->
+    <insert id="createOrder" parameterType="com.example.faqan.vo.Order">
+        insert orders (goods_id,user_id) value (#{order.goodsId},#{order.userId})
+    </insert>
+
+
+
+</mapper>

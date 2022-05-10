@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如 namespace="com.geekq.uMybatis.mapping.UserMapper"就是 com.geekq.uMybatis.mapping.UserMapper(包名)+
+userMapper(userMapper.xml文件去除后缀)保证唯一性
+ -->
+<mapper namespace="com.example.faqan.mapper.VoucherMapper">
+    <resultMap type="com.example.faqan.vo.Voucher" id="voucherMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="is_can_use" property="isCanUse"/>
+    </resultMap>
+
+
+    <sql id="goods_col">
+        id, name, is_can_use
+    </sql>
+
+
+<!--    查询所有的券-->
+    <select id="getAllVoucher" resultMap="voucherMap">
+        select <include refid="goods_col" />
+        from voucher where is_can_use = 1
+    </select>
+<!--    创建对象和用户对映表-->
+    <insert id="createVoucherUser" parameterType="com.example.faqan.vo.VoucherAndUser">
+        insert user_voucher (user_id,voucher_id) value (#{voucherAndUser.userId},#{voucherAndUser.voucherId})
+    </insert>
+
+
+
+</mapper>
